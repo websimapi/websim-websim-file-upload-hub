@@ -1,0 +1,38 @@
+{
+  "database": {
+    "schema": {
+      "uploaded_files": {
+        "id": {
+          "type": "uuid",
+          "description": "The unique identifier for the uploaded file"
+        },
+        "filename": {
+          "type": "text",
+          "description": "The original filename of the uploaded file"
+        },
+        "file_url": {
+          "type": "text",
+          "description": "The WebSim storage URL for the uploaded file"
+        },
+        "file_size": {
+          "type": "integer",
+          "description": "The size of the file in bytes"
+        },
+        "content_type": {
+          "type": "text",
+          "description": "The MIME type of the uploaded file"
+        },
+        "uploader_username": {
+          "type": "text",
+          "description": "The username of the user who uploaded the file"
+        },
+        "upload_date": {
+          "type": "timestamptz",
+          "description": "The date and time when the file was uploaded"
+        }
+      }
+    },
+    "instructions": "This database stores metadata about files uploaded through the WebSim File Upload Hub. Files are stored using the WebSim upload API and this database tracks the metadata. Users can view and manage their uploaded files through the dashboard."
+  }
+}
+
