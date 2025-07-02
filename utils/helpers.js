@@ -6,16 +6,17 @@ export const formatFileSize = (bytes) => {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
 };
 
-export const copyToClipboard = (text) => {
+export const copyToClipboard = (text, event) => {
     navigator.clipboard.writeText(text).then(() => {
-        const button = event.target;
-        const originalText = button.textContent;
-        button.textContent = '✅ Copied!';
-        button.classList.add('bg-green-600');
-        setTimeout(() => {
-            button.textContent = originalText;
-            button.classList.remove('bg-green-600');
-        }, 2000);
+        if (event && event.target) {
+            const button = event.target;
+            const originalText = button.textContent;
+            button.textContent = '✅ Copied!';
+            button.classList.add('bg-green-600');
+            setTimeout(() => {
+                button.textContent = originalText;
+                button.classList.remove('bg-green-600');
+            }, 2000);
+        }
     });
 };
-

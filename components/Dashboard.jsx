@@ -287,7 +287,7 @@ function Dashboard({ currentUser, room }) {
         /* @__PURE__ */ jsxDEV(
           "button",
           {
-            onClick: () => copyToClipboard(file.file_url),
+            onClick: (e) => copyToClipboard(file.file_url, e),
             className: "px-3 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors duration-200 text-sm font-medium flex-shrink-0",
             children: "\u{1F4CB}"
           },

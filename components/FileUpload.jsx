@@ -295,7 +295,7 @@ function FileUpload({ currentUser, room }) {
           /* @__PURE__ */ jsxDEV(
             "button",
             {
-              onClick: () => copyToClipboard(uploadedFile.file_url),
+              onClick: (e) => copyToClipboard(uploadedFile.file_url, e),
               className: "px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-r-lg transition-colors duration-200 font-medium",
               children: "\u{1F4CB} Copy"
             },
