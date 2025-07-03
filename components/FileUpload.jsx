@@ -1,6 +1,7 @@
 import { Fragment, jsxDEV } from "react/jsx-dev-runtime";
 import React, { useState } from "react";
 import { formatFileSize, copyToClipboard } from "../utils/helpers.js";
+import { saveFileToLocalStorage } from "../utils/localStorage.js";
 function FileUpload({ currentUser, room }) {
   const [dragActive, setDragActive] = useState(false);
   const [uploading, setUploading] = useState(false);
@@ -46,10 +47,15 @@ function FileUpload({ currentUser, room }) {
         uploader_username: currentUser.username,
         upload_date: (/* @__PURE__ */ new Date()).toISOString()
       });
-      setUploadedFile({
+      const fileWithUrl = {
         ...fileRecord,
         file_url: fileUrl
-      });
+      };
+      const savedToLocal = saveFileToLocalStorage(fileWithUrl);
+      if (!savedToLocal) {
+        console.warn("Failed to save file metadata to localStorage");
+      }
+      setUploadedFile(fileWithUrl);
     } catch (error2) {
       console.error("Upload failed:", error2);
       setError("Upload failed. Please try again.");
@@ -69,41 +75,41 @@ function FileUpload({ currentUser, room }) {
         children: uploading ? /* @__PURE__ */ jsxDEV("div", { className: "animate-pulse-slow", children: [
           /* @__PURE__ */ jsxDEV("div", { className: "w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center", children: /* @__PURE__ */ jsxDEV("div", { className: "w-8 h-8 border-4 border-white border-t-transparent rounded-full animate-spin" }, void 0, false, {
             fileName: "<stdin>",
-            lineNumber: 86,
+            lineNumber: 95,
             columnNumber: 29
           }, this) }, void 0, false, {
             fileName: "<stdin>",
-            lineNumber: 85,
+            lineNumber: 94,
             columnNumber: 25
           }, this),
           /* @__PURE__ */ jsxDEV("p", { className: "text-xl text-white mb-2", children: "Uploading your file..." }, void 0, false, {
             fileName: "<stdin>",
-            lineNumber: 88,
+            lineNumber: 97,
             columnNumber: 25
           }, this),
           /* @__PURE__ */ jsxDEV("p", { className: "text-slate-400", children: "Please wait while we process your upload" }, void 0, false, {
             fileName: "<stdin>",
-            lineNumber: 89,
+            lineNumber: 98,
             columnNumber: 25
           }, this)
         ] }, void 0, true, {
           fileName: "<stdin>",
-          lineNumber: 84,
+          lineNumber: 93,
           columnNumber: 21
         }, this) : /* @__PURE__ */ jsxDEV(Fragment, { children: [
           /* @__PURE__ */ jsxDEV("div", { className: "w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-2xl animate-bounce-slow", children: "\u{1F4C1}" }, void 0, false, {
             fileName: "<stdin>",
-            lineNumber: 93,
+            lineNumber: 102,
             columnNumber: 25
           }, this),
           /* @__PURE__ */ jsxDEV("h3", { className: "text-2xl font-bold text-white mb-4", children: "Drop your files here" }, void 0, false, {
             fileName: "<stdin>",
-            lineNumber: 96,
+            lineNumber: 105,
             columnNumber: 25
           }, this),
           /* @__PURE__ */ jsxDEV("p", { className: "text-slate-400 mb-6", children: "Or click to browse and select files from your device" }, void 0, false, {
             fileName: "<stdin>",
-            lineNumber: 99,
+            lineNumber: 108,
             columnNumber: 25
           }, this),
           /* @__PURE__ */ jsxDEV(
@@ -118,7 +124,7 @@ function FileUpload({ currentUser, room }) {
             false,
             {
               fileName: "<stdin>",
-              lineNumber: 102,
+              lineNumber: 111,
               columnNumber: 25
             },
             this
@@ -134,14 +140,14 @@ function FileUpload({ currentUser, room }) {
             false,
             {
               fileName: "<stdin>",
-              lineNumber: 108,
+              lineNumber: 117,
               columnNumber: 25
             },
             this
           )
         ] }, void 0, true, {
           fileName: "<stdin>",
-          lineNumber: 92,
+          lineNumber: 101,
           columnNumber: 21
         }, this)
       },
@@ -149,7 +155,7 @@ function FileUpload({ currentUser, room }) {
       false,
       {
         fileName: "<stdin>",
-        lineNumber: 72,
+        lineNumber: 81,
         columnNumber: 13
       },
       this
@@ -159,119 +165,119 @@ function FileUpload({ currentUser, room }) {
       error
     ] }, void 0, true, {
       fileName: "<stdin>",
-      lineNumber: 120,
+      lineNumber: 129,
       columnNumber: 21
     }, this) }, void 0, false, {
       fileName: "<stdin>",
-      lineNumber: 119,
+      lineNumber: 128,
       columnNumber: 17
     }, this),
     uploadedFile && /* @__PURE__ */ jsxDEV("div", { className: "mt-8 p-6 bg-slate-800/70 rounded-2xl border border-slate-600 animate-fade-in", children: [
       /* @__PURE__ */ jsxDEV("div", { className: "flex items-center space-x-3 mb-4", children: [
         /* @__PURE__ */ jsxDEV("div", { className: "w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center text-xl", children: "\u2705" }, void 0, false, {
           fileName: "<stdin>",
-          lineNumber: 127,
+          lineNumber: 136,
           columnNumber: 25
         }, this),
         /* @__PURE__ */ jsxDEV("div", { children: [
           /* @__PURE__ */ jsxDEV("h4", { className: "text-xl font-bold text-white", children: "Upload Successful!" }, void 0, false, {
             fileName: "<stdin>",
-            lineNumber: 131,
+            lineNumber: 140,
             columnNumber: 29
           }, this),
           /* @__PURE__ */ jsxDEV("p", { className: "text-slate-400", children: "Your file is now available" }, void 0, false, {
             fileName: "<stdin>",
-            lineNumber: 132,
+            lineNumber: 141,
             columnNumber: 29
           }, this)
         ] }, void 0, true, {
           fileName: "<stdin>",
-          lineNumber: 130,
+          lineNumber: 139,
           columnNumber: 25
         }, this)
       ] }, void 0, true, {
         fileName: "<stdin>",
-        lineNumber: 126,
+        lineNumber: 135,
         columnNumber: 21
       }, this),
       /* @__PURE__ */ jsxDEV("div", { className: "bg-slate-900 rounded-lg p-4 mb-4", children: /* @__PURE__ */ jsxDEV("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-4 text-sm", children: [
         /* @__PURE__ */ jsxDEV("div", { children: [
           /* @__PURE__ */ jsxDEV("span", { className: "text-slate-400", children: "Filename:" }, void 0, false, {
             fileName: "<stdin>",
-            lineNumber: 139,
+            lineNumber: 148,
             columnNumber: 33
           }, this),
           /* @__PURE__ */ jsxDEV("span", { className: "text-white ml-2 font-mono", children: uploadedFile.filename }, void 0, false, {
             fileName: "<stdin>",
-            lineNumber: 140,
+            lineNumber: 149,
             columnNumber: 33
           }, this)
         ] }, void 0, true, {
           fileName: "<stdin>",
-          lineNumber: 138,
+          lineNumber: 147,
           columnNumber: 29
         }, this),
         /* @__PURE__ */ jsxDEV("div", { children: [
           /* @__PURE__ */ jsxDEV("span", { className: "text-slate-400", children: "Size:" }, void 0, false, {
             fileName: "<stdin>",
-            lineNumber: 143,
+            lineNumber: 152,
             columnNumber: 33
           }, this),
           /* @__PURE__ */ jsxDEV("span", { className: "text-white ml-2", children: formatFileSize(uploadedFile.file_size) }, void 0, false, {
             fileName: "<stdin>",
-            lineNumber: 144,
+            lineNumber: 153,
             columnNumber: 33
           }, this)
         ] }, void 0, true, {
           fileName: "<stdin>",
-          lineNumber: 142,
+          lineNumber: 151,
           columnNumber: 29
         }, this),
         /* @__PURE__ */ jsxDEV("div", { children: [
           /* @__PURE__ */ jsxDEV("span", { className: "text-slate-400", children: "Type:" }, void 0, false, {
             fileName: "<stdin>",
-            lineNumber: 147,
+            lineNumber: 156,
             columnNumber: 33
           }, this),
           /* @__PURE__ */ jsxDEV("span", { className: "text-white ml-2", children: uploadedFile.content_type || "Unknown" }, void 0, false, {
             fileName: "<stdin>",
-            lineNumber: 148,
+            lineNumber: 157,
             columnNumber: 33
           }, this)
         ] }, void 0, true, {
           fileName: "<stdin>",
-          lineNumber: 146,
+          lineNumber: 155,
           columnNumber: 29
         }, this),
         /* @__PURE__ */ jsxDEV("div", { children: [
           /* @__PURE__ */ jsxDEV("span", { className: "text-slate-400", children: "Uploaded:" }, void 0, false, {
             fileName: "<stdin>",
-            lineNumber: 151,
+            lineNumber: 160,
             columnNumber: 33
           }, this),
           /* @__PURE__ */ jsxDEV("span", { className: "text-white ml-2", children: new Date(uploadedFile.upload_date).toLocaleString() }, void 0, false, {
             fileName: "<stdin>",
-            lineNumber: 152,
+            lineNumber: 161,
             columnNumber: 33
           }, this)
         ] }, void 0, true, {
           fileName: "<stdin>",
-          lineNumber: 150,
+          lineNumber: 159,
           columnNumber: 29
         }, this)
       ] }, void 0, true, {
         fileName: "<stdin>",
-        lineNumber: 137,
+        lineNumber: 146,
         columnNumber: 25
       }, this) }, void 0, false, {
         fileName: "<stdin>",
-        lineNumber: 136,
+        lineNumber: 145,
         columnNumber: 21
       }, this),
       /* @__PURE__ */ jsxDEV("div", { className: "space-y-3", children: /* @__PURE__ */ jsxDEV("div", { children: [
         /* @__PURE__ */ jsxDEV("label", { className: "block text-sm font-medium text-slate-300 mb-2", children: "File URL (Click to copy):" }, void 0, false, {
           fileName: "<stdin>",
-          lineNumber: 159,
+          lineNumber: 168,
           columnNumber: 29
         }, this),
         /* @__PURE__ */ jsxDEV("div", { className: "flex", children: [
@@ -287,7 +293,7 @@ function FileUpload({ currentUser, room }) {
             false,
             {
               fileName: "<stdin>",
-              lineNumber: 163,
+              lineNumber: 172,
               columnNumber: 33
             },
             this
@@ -303,33 +309,33 @@ function FileUpload({ currentUser, room }) {
             false,
             {
               fileName: "<stdin>",
-              lineNumber: 169,
+              lineNumber: 178,
               columnNumber: 33
             },
             this
           )
         ] }, void 0, true, {
           fileName: "<stdin>",
-          lineNumber: 162,
+          lineNumber: 171,
           columnNumber: 29
         }, this)
       ] }, void 0, true, {
         fileName: "<stdin>",
-        lineNumber: 158,
+        lineNumber: 167,
         columnNumber: 25
       }, this) }, void 0, false, {
         fileName: "<stdin>",
-        lineNumber: 157,
+        lineNumber: 166,
         columnNumber: 21
       }, this)
     ] }, void 0, true, {
       fileName: "<stdin>",
-      lineNumber: 125,
+      lineNumber: 134,
       columnNumber: 17
     }, this)
   ] }, void 0, true, {
     fileName: "<stdin>",
-    lineNumber: 71,
+    lineNumber: 80,
     columnNumber: 9
   }, this);
 }
