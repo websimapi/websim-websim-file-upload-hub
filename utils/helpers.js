@@ -20,3 +20,22 @@ export const copyToClipboard = (text, event) => {
         }
     });
 };
+
+// Add this function for handling file serving requests
+export const handleFileServingRequest = async (room, username, filename) => {
+    try {
+        const files = await room.query(
+            'SELECT file_url, filename, content_type, file_size, upload_date FROM public.uploaded_files WHERE uploader_username = $1 AND filename = $2',
+            [username, filename]
+        );
+        
+        if (files.length === 0) {
+            return { error: `File "${filename}" not found for user @${username}` };
+        }
+        
+        return { file: files[0] };
+    } catch (error) {
+        console.error('Error fetching file:', error);
+        return { error: `Error loading file: ${error.message}` };
+    }
+};
